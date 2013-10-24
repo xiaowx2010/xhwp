@@ -1,0 +1,118 @@
+a
+{
+	font-size: 12px;
+	color: #000000;
+	font-family: "ËÎÌו", Verdana, Arial, Helvetica;
+	text-decoration: none;	
+}
+a:link{
+	font-size: 12px;
+	color: #000000;
+	font-family: "ËÎÌו", Verdana, Arial, Helvetica;
+	text-decoration: none;	
+}
+a:hover {
+	color: #FF6600;
+	text-decoration: none;
+}
+td {
+	font-family: "ËÎÌו";
+	font-size: 12px;
+	text-decoration: none;
+}
+span {
+	font-size: 12px;
+	text-decoration: none;
+}
+body {
+	font-size: 12px;
+	color: #000000;
+	text-decoration: none;
+	SCROLLBAR-FACE-COLOR: #EAECEB;
+	SCROLLBAR-HIGHLIGHT-COLOR: #EAECEB;
+	SCROLLBAR-SHADOW-COLOR: #B1B7C5;
+	SCROLLBAR-3DLIGHT-COLOR: #ffffff;
+	SCROLLBAR-ARROW-COLOR: #134197;
+	SCROLLBAR-TRACK-COLOR: #EAECEB;
+	SCROLLBAR-DARKSHADOW-COLOR: #EAECEB;
+	SCROLLBAR-BASE-COLOR: #EAECEB;
+	margin: 0px;
+	background-image: url(images/default_bg.GIF);
+}
+
+
+#container {
+    width:1004px;
+	margin: 0px auto ;
+	padding: 0px ;
+}
+.font1225_FFFFFF {
+    font-size:12px;
+	line-height:25px;
+	color:#FFFFFF;
+}
+.font1225_ff0000 {
+    font-size:12px;
+	line-height:25px;
+	color:#ff0000;
+}
+.font1225_000000 {
+    font-size:12px;
+	line-height:25px;
+	color:#000000;
+}
+.font1430B_000000 {
+    font-size:14px;
+	line-height:30px;
+	color:#000000;
+	font-weight:bold;
+}
+.font1430B_646464 {
+    font-size:14px;
+	line-height:30px;
+	color:#646464;
+	font-weight:bold;
+}
+.anniu_1435B_646464 {
+    background:url(images/default_017.GIF) no-repeat center center ;
+	width:183px;
+	font-weight:bold;
+	font-size:14px;
+	color:#646464;
+	line-height:35px;
+	text-align:center;
+}
+.anniu_1435B_646464a {
+    width:183px;
+	font-weight:bold;
+	font-size:14px;
+	color:#646464;
+	line-height:35px;
+	text-align:center;
+}
+.anniu_1435_646464 {
+    background:url(images/default_018.GIF) no-repeat center center ;
+	width:183px;
+	font-size:14px;
+	color:#646464;
+	line-height:35px;
+	text-align:center;
+}
+.font1427B_ffffff {
+    font-size:14px;
+	line-height:27px;
+	color:#ffffff;
+	font-weight:bold;
+}
+.anniu_1220_000000 {
+    font-size:12px;
+	line-height:20px;
+	color:#000000;
+	background:url(images/default_024.GIF) no-repeat center center;
+	text-align:center;
+}
+.font1220_000000 {
+    font-size:12px;
+	line-height:20px;
+	color:#000000;
+}

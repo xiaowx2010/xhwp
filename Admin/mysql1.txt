@@ -1,0 +1,243 @@
+-- MySQL dump 10.10
+--
+-- Host: localhost    Database: xiangmu1
+-- ------------------------------------------------------
+-- Server version	5.0.22-community
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES gbk */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `audit_confirm_info`
+--
+
+DROP TABLE IF EXISTS `audit_confirm_info`;
+CREATE TABLE `audit_confirm_info` (
+  `CODE` varchar(32) NOT NULL COMMENT '调查对象代码',
+  `EXP_CODE` varchar(30) NOT NULL COMMENT '逻辑关系代码',
+  `CONFIRM_TIME` varchar(30) default NULL COMMENT '确认时间',
+  `USER_ID` varchar(30) default NULL COMMENT '确认人',
+  `REMARK` varchar(255) default NULL COMMENT '备注',
+  `CYC_CODE` varchar(16) default NULL COMMENT '报告期字段'
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='增加确认信息';
+
+--
+-- Table structure for table `audit_err_info`
+--
+
+DROP TABLE IF EXISTS `audit_err_info`;
+CREATE TABLE `audit_err_info` (
+  `ERR_MSG` varchar(255) default NULL COMMENT '错误描述信息',
+  `EXP_CODE` varchar(30) NOT NULL COMMENT '逻辑关系代码',
+  `CODE` varchar(32) NOT NULL COMMENT '调查对象代码',
+  `ERR_ITEM_EXP` varchar(2048) default NULL COMMENT '错误数据项表达式',
+  `CYC_CODE` varchar(16) default NULL COMMENT '报告期字段'
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='审核错误信息';
+
+--
+-- Table structure for table `audit_task`
+--
+
+DROP TABLE IF EXISTS `audit_task`;
+CREATE TABLE `audit_task` (
+  `AUDIT_TASK_ID` varchar(32) NOT NULL COMMENT '审核任务代码',
+  `PROC_TIME` date default NULL COMMENT '执行时间',
+  `PROC_USER` varchar(16) default NULL COMMENT '执行者',
+  PRIMARY KEY  (`AUDIT_TASK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='审核任务';
+
+--
+-- Table structure for table `b23`
+--
+
+DROP TABLE IF EXISTS `b23`;
+CREATE TABLE `b23` (
+  `CODE` varchar(10) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='表23 矿产品、原料（原矿、精矿）名称及代码';
+
+--
+-- Table structure for table `bgdj`
+--
+
+DROP TABLE IF EXISTS `bgdj`;
+CREATE TABLE `bgdj` (
+  `CODE` char(1) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='宾馆饭店等级代码';
+
+--
+-- Table structure for table `bsqxlx502`
+--
+
+DROP TABLE IF EXISTS `bsqxlx502`;
+CREATE TABLE `bsqxlx502` (
+  `CODE` char(1) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='排水去向类型代码502';
+
+--
+-- Table structure for table `bzw`
+--
+
+DROP TABLE IF EXISTS `bzw`;
+CREATE TABLE `bzw` (
+  `CODE` char(1) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='监测标识位';
+
+--
+-- Table structure for table `cate_item_table`
+--
+
+DROP TABLE IF EXISTS `cate_item_table`;
+CREATE TABLE `cate_item_table` (
+  `CATE_CODE` varchar(30) NOT NULL COMMENT '目录表代码',
+  `CATE_ITEM_CODE` varchar(30) NOT NULL COMMENT '目录数据项代码',
+  `CATE_ITEM_NAME` varchar(255) NOT NULL COMMENT '目录数据项名称',
+  `CATE_ITEM_LENGTH` decimal(5,0) NOT NULL COMMENT '目录数据项长度',
+  `CATE_ITEM_SCALE` decimal(3,0) NOT NULL COMMENT '目录数据项精度',
+  `CATE_ITEM_TYPE` char(1) NOT NULL COMMENT '目录数据项类型',
+  `CATE_ITEM_FLAG` varchar(30) default NULL COMMENT '目录数据项标志',
+  PRIMARY KEY  (`CATE_CODE`,`CATE_ITEM_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='目录数据项表';
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `CATE_CODE` varchar(30) NOT NULL COMMENT '目录表代码',
+  `CATE_NAME` varchar(255) default NULL COMMENT '目录表简称',
+  `CATE_DESC` varchar(255) default NULL COMMENT '目录表描述',
+  `CATE_TYPE` char(1) NOT NULL COMMENT '目录类型',
+  `STATIC_FLAG` char(1) NOT NULL COMMENT '是否可动态创建',
+  `LEVEL_NUM` varchar(255) NOT NULL COMMENT '目录数据项层次',
+  `CATE_RULE` varchar(255) default NULL COMMENT '业务规则',
+  `LEVEL_NUM_DESC` varchar(255) default NULL COMMENT '目录数据项层次描述',
+  `TREE_MODE` char(1) NOT NULL COMMENT '是否树型',
+  `FILL_CODE` char(1) default NULL COMMENT '填充代码',
+  `STAT_UNIT_CODE` varchar(20) NOT NULL COMMENT '行政区划代码',
+  PRIMARY KEY  (`CATE_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='目录数据表';
+
+--
+-- Table structure for table `cctl`
+--
+
+DROP TABLE IF EXISTS `cctl`;
+CREATE TABLE `cctl` (
+  `CODE` varchar(2) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='表11 废气除尘、脱硫方法代码表';
+
+--
+-- Table structure for table `cctl1`
+--
+
+DROP TABLE IF EXISTS `cctl1`;
+CREATE TABLE `cctl1` (
+  `CODE` char(1) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='表6 废气除尘方法代码表';
+
+--
+-- Table structure for table `cctl2`
+--
+
+DROP TABLE IF EXISTS `cctl2`;
+CREATE TABLE `cctl2` (
+  `CODE` varchar(2) NOT NULL COMMENT '代码',
+  `NAME` varchar(255) NOT NULL COMMENT '名称',
+  PRIMARY KEY  (`CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='表6 废气脱硫方法代码表';
+
+--
+-- Table structure for table `cen_object`
+--
+
+DROP TABLE IF EXISTS `cen_object`;
+CREATE TABLE `cen_object` (
+  `CEN_OBJECT_CODE` varchar(5) NOT NULL COMMENT '调查对象类别代码',
+  `PARENT_CEN_OBJECT_CODE` varchar(30) default NULL COMMENT '父调查对象类别',
+  `CEN_OBJECT_NAME` varchar(255) NOT NULL COMMENT '调查对象名称',
+  `CEN_OBJECT_TYPE` char(1) default NULL COMMENT '调查对象类型',
+  `CEN_OBJECT_ID` varchar(2) default NULL COMMENT '调查对象识别码',
+  `CEN_OBJECT_FIELD_STRUCT` varchar(255) default NULL COMMENT '调查对象编码规则',
+  `INPUT_RULE` varchar(255) default NULL COMMENT '录入规则',
+  `CEN_GROUP` varchar(255) default NULL COMMENT '调查对象分组',
+  PRIMARY KEY  (`CEN_OBJECT_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='调查对象类别';
+
+--
+-- Table structure for table `cen_object_confirm_info`
+--
+
+DROP TABLE IF EXISTS `cen_object_confirm_info`;
+CREATE TABLE `cen_object_confirm_info` (
+  `CEN_OBJ_CODE` varchar(32) NOT NULL COMMENT '调查对象代码',
+  `CEN_OBJ_TYPE` varchar(5) NOT NULL COMMENT '调查对象类别代码',
+  `BD_FLAG` varchar(5) NOT NULL default '0' COMMENT '比对标识',
+  `FL_FLAG` varchar(5) NOT NULL default '0' COMMENT '复录比对标识',
+  `SH_FLAG` varchar(5) NOT NULL default '0' COMMENT '审核比对标识',
+  PRIMARY KEY  (`CEN_OBJ_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='调查对象确认信息表';
+
+--
+-- Table structure for table `cen_object_table_rel`
+--
+
+DROP TABLE IF EXISTS `cen_object_table_rel`;
+CREATE TABLE `cen_object_table_rel` (
+  `CEN_OBJECT_CODE` varchar(5) NOT NULL COMMENT '调查对象类别代码',
+  `TBL_CODE` varchar(30) NOT NULL COMMENT '报表代码',
+  `SEQ_NO` decimal(5,0) default NULL COMMENT '顺序号',
+  PRIMARY KEY  (`CEN_OBJECT_CODE`,`TBL_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='调查对象_报表_关系';
+
+--
+-- Table structure for table `common_tbl_desc`
+--
+
+DROP TABLE IF EXISTS `common_tbl_desc`;
+CREATE TABLE `common_tbl_desc` (
+  `COMMON_TBL_CODE` varchar(30) NOT NULL COMMENT '表代码',
+  `TBL_TYPE` char(1) NOT NULL COMMENT '表类型',
+  `STATUS` char(1) NOT NULL COMMENT '状态',
+  `SYS_TBL_FLAG` char(1) NOT NULL COMMENT '系统表标志',
+  PRIMARY KEY  (`COMMON_TBL_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='表信息';
+
+--
+-- Table structure for table `confirm_info`
+--
+
+DROP TABLE IF EXISTS `confirm_info`;
+CREATE TABLE `confirm_info` (
+  `CODE` varchar(32) NOT NULL COMMENT '调查对象代码',
+  `TBL_CODE` varchar(30) NOT NULL COMMENT '表代码',
+  `CONFIRM_FLAG` char(1) default NULL COMMENT '确认标识',
+  `CONFIRM_PERSON` varchar(255) default NULL COMMENT '确认人',
+  `CONFIRM_TIME` varchar(30) default NULL COMMENT '确认时间',
+  `BUSS_FLAG` char(1) default NULL COMMENT '业务代码 1 比对 2 审核',
+  `NOTE` varchar(255) default NULL COMMENT '注释',
+  PRIMARY KEY  (`CODE`,`TBL_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk COMMENT='确认标记表';
+
+
+
