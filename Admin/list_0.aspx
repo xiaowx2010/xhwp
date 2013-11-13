@@ -221,7 +221,10 @@
         {
             dr["btnstr"] += "<a href=\"javascript:if(confirm('确认删除吗！')){document.location='getpage.aspx?aid=" + StringUtility.StringToBase64("delete") + "&mid=" + mid + "&id=" + dr["mocode"].ToString() + "&navindex=" + navindex + "';}\"><img src=\"images/icons/tb03.gif\" title=\"删除\" align=\"absmiddle\" border=\"0\"></a>";
         }
-	    dr["orgcode"] = StringUtility.StringToBase64(dr["fld_"+mid+"_1"].ToString());
+        if(mid=="1406")
+            dr["orgcode"] = StringUtility.StringToBase64(dr["fld_"+mid+"_57"].ToString());
+        else
+	        dr["orgcode"] = StringUtility.StringToBase64(dr["fld_"+mid+"_1"].ToString());
     }
     //获取列表显示字段字段
     private DataTable GetListFields(string mid)

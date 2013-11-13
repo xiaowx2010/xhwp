@@ -239,9 +239,14 @@ private void SetToolBar()
 		
 		Response.Redirect("getpage.aspx?mid=0");
 	}
+	else if (",2,3,7,".IndexOf(","+mid+",")>-1 && IsSystemDeveloper())
+	{
+		tb_2.Visible = true;
+	}
 	
     mua=";"+GetModuleActions(mid)+";";//Ä£¿éÈ¨ÏÞ    
     CheckToolBar(mua.Trim(';').Split(';'));
+	//Response.Write(mid+"+++++");
     if(aid == "list"){				
 		tb_backlist.Visible = false;
 		tb_save.Visible = false;				

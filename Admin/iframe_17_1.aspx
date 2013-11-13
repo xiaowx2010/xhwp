@@ -23,7 +23,7 @@ string horgcode="";
 		
 		DataTable h_dtindex = db.GetDataTable(db.ConnStr,"select moduleIndex from gmis_module where modulecode=1261");
 		String h_index = h_dtindex.Rows[0][0].ToString();
-		DataTable h_dt = db.GetDataTable(db.ConnStr,"select gm.modulecode as modulecode,gf.fieldname as fieldname,gm.moduleurl as moduleurl from gmis_module gm	inner join gmis_field gf		on gm.modulecode=gf.modulecode where gm.moduleurl<>'' and gm.moduleindex like '%"+h_index+"%'	 and gm.moduleurl not like '%sub%'	and caption='代码'");
+		DataTable h_dt = db.GetDataTable(db.ConnStr,"select gm.modulecode as modulecode,gf.fieldname as fieldname,gm.moduleurl as moduleurl from gmis_module gm	inner join gmis_field gf		on gm.modulecode=gf.modulecode where gm.moduleurl<>'' and gm.moduleindex like '"+h_index+"%'	 and gm.moduleurl not like '%sub%'	and caption='代码'");
 		//if(int.Parse(mid)<1270){
 			HtmlTableCell cell1 = new HtmlTableCell();
 			Guangye.WebApplication.Controls.Button btn1 = new Guangye.WebApplication.Controls.Button();
@@ -71,7 +71,7 @@ string horgcode="";
 				//=============
 				//此栏目本身栏目
 
-				DataTable h_zdt = db.GetDataTable(db.ConnStr,"select modulecode,moduleurl from gmis_module where moduleurl<>'' and moduleindex like '%"+h_index+"%' and modulecode in ("+horgcode.Trim(',')+")");	
+				DataTable h_zdt = db.GetDataTable(db.ConnStr,"select modulecode,moduleurl from gmis_module where moduleurl<>'' and moduleindex like '"+h_index+"%' and modulecode in ("+horgcode.Trim(',')+")");
 				foreach (DataRow zdr in h_zdt.Rows)
 				{
 
