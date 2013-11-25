@@ -41,15 +41,17 @@
     
     private void BindDataList()
     {
-		db.SqlString = "select mocode,fld_1390_2,fld_1390_1,fld_1390_3,fld_1390_4 from gmis_mo_1390 where fld_1390_1='"+p_field+"'";
+		db.SqlString = "select mocode,fld_1390_2,fld_1390_1,fld_1390_3,fld_1390_4,fld_1390_5 from gmis_mo_1390 where fld_1390_1='"+p_field+"'";
 		DataTable fieldDT = db.GetDataTable();
 		
 		string h_unit = fieldDT.Rows[0]["fld_1390_4"].ToString();
 		string h_newFieldCode = fieldDT.Rows[0]["fld_1390_2"].ToString();
 		string h_oldFieldCode = fieldDT.Rows[0]["fld_1390_3"].ToString();
+		string h_FieldCode_10 = fieldDT.Rows[0]["fld_1390_5"].ToString();
 		string h_fieldName = fieldDT.Rows[0]["fld_1390_1"].ToString();//污染因子
 		string h_newModuleCode = h_newFieldCode.Substring(h_newFieldCode.IndexOf('_')+1,4);
 		string h_oldModuleCode = h_oldFieldCode.Substring(h_oldFieldCode.IndexOf('_')+1,3);
+		string h_ModuleCode_10 = h_FieldCode_10.Substring(h_FieldCode_10.IndexOf('_')+1,4);
 		
         string h_fstr = "";
 
@@ -69,13 +71,17 @@
         string tablename = " gmis_mo_1280 g1280 left join gmis_mo_658 g658 on g1280.fld_1280_1=g658.fld_658_1 ";//数据表名称
         tablename += " inner join gmis_mo_"+h_newModuleCode+" on fld_1280_1=fld_"+h_newModuleCode+"_1 ";
 		tablename += " inner join gmis_mo_"+h_oldModuleCode+" on fld_1280_1=fld_"+h_oldModuleCode+"_1 ";
+		tablename += " left join gmis_old_new_code on fld_1280_1= oldcode ";
+		tablename += " left join gmis_mo_"+h_ModuleCode_10+" on fld_"+h_ModuleCode_10+"_1= newcode ";
 		if(h_fieldName.IndexOf("二氧化硫") > -1 || h_fieldName.IndexOf("氮氧化物") > -1)
 		{
 			tablename += " inner join gmis_mo_1312 on fld_1280_1=fld_1312_1 ";
 			tablename += " inner join gmis_mo_707 on fld_1280_1=fld_707_1 ";
+			tablename += " left join gmis_mo_1409 on newcode=fld_1409_1 ";
 		}
 		else if(h_fieldName=="排水去向")
 		{
+		    h_FieldCode_10="fld_1400_7+(select fld_1165_2 from gmis_mo_1165 where fld_1165_1=fld_1400_7)";
 			h_newFieldCode="fld_1284_7+(select fld_1165_2 from gmis_mo_1165 where fld_1165_1=fld_1284_7)";
 			h_oldFieldCode="fld_668_7+(select fld_1165_2 from gmis_mo_1165 where fld_1165_1=fld_668_7)";
 		}
@@ -97,10 +103,11 @@
         ArrayList al = new ArrayList();
 
         al.Add(new string[] { "企业名", "30%", "fld_1280_2" });
-        al.Add(new string[] { "污染因子", "15%", "fld_1280_2" });
-        al.Add(new string[] { "2007年数值（"+h_unit+"）", "18%", h_newFieldCode });
-        al.Add(new string[] { "2009年数值（"+h_unit+"）", "18%", h_oldFieldCode });
-        al.Add(new string[] { "行政区域", "20%", "fld_1280_41" });
+        al.Add(new string[] { "污染因子", "12%", "fld_1280_2" });
+        al.Add(new string[] { "2010年数值（"+h_unit+"）", "15%", h_FieldCode_10 });
+        al.Add(new string[] { "2009年数值（"+h_unit+"）", "15%", h_newFieldCode });
+        al.Add(new string[] { "2007年数值（"+h_unit+"）", "15%", h_oldFieldCode });
+        al.Add(new string[] { "行政区域", "15%", "fld_1280_41" });
 
         sortdir = (sortdir == "0") ? "1" : "0";
         string h_dirstr = "";
@@ -129,19 +136,21 @@
        
         //设置列表控件显示行数
         //设置列表控件数据源    
-		string h_SqlStr="select distinct '' as orgcode,fld_1280_2,'"+h_fieldName+"' as h_fieldName,'' as old,'' as new,fld_1280_41,fld_1280_1,isnull("+h_newFieldCode+",0) as h_newFieldCode,"+h_oldFieldCode+" as h_oldFieldCode from "+tablename+"  where 1=1 " + h_fstr + " " + orderstr + " ";
+		string h_SqlStr="select distinct '' as orgcode,fld_1280_2,'"+h_fieldName+"' as h_fieldName,'' as h_10,'' as new,'' as old,'' as new,fld_1280_41,fld_1280_1,isnull("+h_FieldCode_10+",0) as h_FieldCode_10,isnull("+h_newFieldCode+",0) as h_newFieldCode,"+h_oldFieldCode+" as h_oldFieldCode from "+tablename+"  where 1=1 " + h_fstr + " " + orderstr + " ";
 		DataTable h_dt = db.GetDataTable(db.ConnStr, h_SqlStr);
 		if(h_fieldName != "排水去向")
 		{
-			double h_old=0,h_new=0;
+			double h_old=0,h_new=0,h_10=0;
 			foreach (DataRow dr in h_dt.Rows)
 			{
+			        dr["h_10"]=double.Parse(dr["h_FieldCode_10"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
 					dr["old"]=double.Parse(dr["h_oldFieldCode"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
 					dr["new"]=double.Parse(dr["h_newFieldCode"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
+					h_10+=double.Parse(dr["h_FieldCode_10"].ToString());
 					h_old+=double.Parse(dr["h_oldFieldCode"].ToString());
 					h_new+=double.Parse(dr["h_newFieldCode"].ToString());
 			}
-			AmountMes.InnerHtml="合计 07年数据："+h_old.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 09年数据："+h_new.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）。<font color=red>同比增长"+(h_new-h_old).ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）</font>,<font color=red>约"+((h_new-h_old)*100/h_old).ToString("N2")+"%</font>";
+			AmountMes.InnerHtml="合计 07年数据："+h_old.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 09年数据："+h_new.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 10年数据："+h_10.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）。<font color=red>同比增长"+(h_new-h_old).ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）</font>,<font color=red>约"+((h_new-h_old)*100/h_old).ToString("N2")+"%</font>";
 		}
 		else
 		{
@@ -150,7 +159,7 @@
        list.DataTable = h_dt;
 	   list.Rows = h_dt.Rows.Count;
 		
-		//Response.Write(list.SqlStr);
+		Response.Write(h_SqlStr);
 
     }
 	
@@ -270,11 +279,13 @@ function toAddNew(arg1,arg2,arg3)
 			<td>*&nbsp;</td>
 			<td>*&nbsp;</td>
 			<td>*&nbsp;</td>
+			<td>*&nbsp;</td>
 		</tr>
 	</G:Template>
 	<G:Template id="listtemp2" runat="server">
 		<tr class="tr_listcontent">
 			<td align="left">&nbsp;</td>
+			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
