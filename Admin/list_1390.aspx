@@ -136,13 +136,14 @@
        
         //设置列表控件显示行数
         //设置列表控件数据源    
-		string h_SqlStr="select distinct '' as orgcode,fld_1280_2,'"+h_fieldName+"' as h_fieldName,'' as h_10,'' as new,'' as old,'' as new,fld_1280_41,fld_1280_1,isnull("+h_FieldCode_10+",0) as h_FieldCode_10,isnull("+h_newFieldCode+",0) as h_newFieldCode,"+h_oldFieldCode+" as h_oldFieldCode from "+tablename+"  where 1=1 " + h_fstr + " " + orderstr + " ";
+		string h_SqlStr="select distinct '' as orgcode,fld_1280_2,'"+h_fieldName+"' as h_fieldName,'' as h_10,'' as new,'' as old,fld_1280_41,fld_1280_1,isnull("+h_FieldCode_10+",0) as h_FieldCode_10,isnull("+h_newFieldCode+",0) as h_newFieldCode,"+h_oldFieldCode+" as h_oldFieldCode from "+tablename+"  where 1=1 " + h_fstr + " " + orderstr + " ";
 		DataTable h_dt = db.GetDataTable(db.ConnStr, h_SqlStr);
 		if(h_fieldName != "排水去向")
 		{
 			double h_old=0,h_new=0,h_10=0;
 			foreach (DataRow dr in h_dt.Rows)
 			{
+			        dr["orgcode"] = StringUtility.StringToBase64(dr["fld_1280_1"].ToString());
 			        dr["h_10"]=double.Parse(dr["h_FieldCode_10"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
 					dr["old"]=double.Parse(dr["h_oldFieldCode"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
 					dr["new"]=double.Parse(dr["h_newFieldCode"].ToString()).ToString("N20").TrimEnd('0').TrimEnd('.');
@@ -150,7 +151,10 @@
 					h_old+=double.Parse(dr["h_oldFieldCode"].ToString());
 					h_new+=double.Parse(dr["h_newFieldCode"].ToString());
 			}
-			AmountMes.InnerHtml="合计 07年数据："+h_old.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 09年数据："+h_new.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 10年数据："+h_10.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）。<font color=red>同比增长"+(h_new-h_old).ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）</font>,<font color=red>约"+((h_new-h_old)*100/h_old).ToString("N2")+"%</font>";
+
+			AmountMes.InnerHtml="合计: 07年数据："+h_old.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）; 09年数据："+h_new.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）。<font color=red>同比增长"+(h_new-h_old).ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）</font>,<font color=red>约"+((h_new-h_old)*100/h_old).ToString("N2")+"%</font>";
+			AmountMes.InnerHtml+="<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			AmountMes.InnerHtml+="10年数据："+h_10.ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）。<font color=red>同比增长"+(h_10-h_new).ToString("N20").TrimEnd('0').TrimEnd('.')+"（"+h_unit+"）</font>,<font color=red>约"+((h_10-h_new)*100/h_old).ToString("N2")+"%</font>";
 		}
 		else
 		{
@@ -159,18 +163,18 @@
        list.DataTable = h_dt;
 	   list.Rows = h_dt.Rows.Count;
 		
-		Response.Write(h_SqlStr);
+		Response.Write(h_dt.Rows.Count);
 
     }
 	
-    public override void BeforeOutput(DataTable dt, int rowi)
-    {	//处理当前页数据
-
-        DataRow dr = dt.Rows[rowi];
-
-	    dr["orgcode"] = StringUtility.StringToBase64(dr["fld_1280_1"].ToString());
-		
-    }
+//    public override void BeforeOutput(DataTable dt, int rowi)
+//    {	//处理当前页数据
+//
+//        DataRow dr = dt.Rows[rowi];
+//
+//	    dr["orgcode"] = StringUtility.StringToBase64(dr["fld_1280_1"].ToString());
+//
+//    }
 
     private void Click_Seach(object sender, System.EventArgs e)
     {   

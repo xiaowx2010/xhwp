@@ -2,7 +2,7 @@
 <%@ Page Language="c#"  Inherits="Guangye.WebApplication.Controls.CheckLoginPage"   %>
 <%@ Register TagPrefix="G" Namespace="Guangye.WebApplication.Controls" Assembly="Guangye.WebApplication.Controls" %>
 <HTML>
-<HEAD>	
+<HEAD>
 	<G:HtmlHead id="guangye" runat="server"></G:HtmlHead>
 	<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
 </HEAD>
@@ -11,33 +11,26 @@
 string hycode = "";
 private void Page_Load(object sender, System.EventArgs e)
 {
-    SetToolBar();//设置工具条,同时获取固定URL参数      
+    SetToolBar();//设置工具条,同时获取固定URL参数
 	string orgcode = GetQueryString("orgcode","");
 	hycode = GetQueryString("hycode","");
-
-    db.SqlString = "select fld_1202_1,fld_1202_3,fld_1202_2,fld_1202_15,(select fld_1201_1 from gmis_mo_1201 where mocode=fld_1202_4),fld_1202_5,(select fld_1200_1 from gmis_mo_1200 where mocode=fld_1202_21),fld_1202_20,(select fld_1157_1+'|'+fld_1157_2 as name from gmis_mo_1157 where fld_1157_1=fld_1202_17),(select fld_1162_1+'|'+fld_1162_2 as name from gmis_mo_1162 where fld_1162_1=fld_1202_19),fld_1202_6,fld_1202_7,fld_1202_8,fld_1202_9,fld_1202_10,fld_1202_11,fld_1202_16,fld_1202_12,fld_1202_13,fld_1202_14,fld_1202_18 from gmis_mo_1202 where fld_1202_2='"+orgcode+"'";
+//    Response.Write(orgcode);
+    string sql = " isnull(fld_1396_22,'')+isnull(fld_1396_23,'')+isnull(fld_1396_40,'')+isnull(fld_1396_41,'')+isnull(fld_1396_9,''),fld_1396_1,fld_1396_14,fld_1396_41,fld_1396_6,fld_1396_30,fld_1396_31,(select fld_1157_1+'|'+fld_1157_2 as name from gmis_mo_1157 where fld_1157_1=fld_1396_32),(select fld_1162_1+'|'+fld_1162_2 as name from gmis_mo_1162 where fld_1162_1=fld_1396_33),cast(fld_1396_16 as varchar)+'°'+cast(fld_1396_17 as varchar)+''''+cast(fld_1396_18 as varchar)+'\"'";
+	db.SqlString = "select fld_1396_2,"+sql+" ,cast(fld_1396_26 as varchar)+'°'+cast(fld_1396_27 as varchar)+''''+cast(fld_1396_28 as varchar)+'\"',fld_1396_19,fld_1396_12,fld_1396_10,fld_1396_42,cast(fld_1396_34 as varchar)+'年'+cast(fld_1396_35 as varchar)+'月' from gmis_mo_1396 where fld_1396_1='"+orgcode+"'";
     DataTable dt = db.GetDataTable();
     if (dt.Rows.Count==0)
     {
-        string oldcode = GetFieldData("select oldcode from gmis_old_new_code where newcode='"+orgcode+"'");
-        if (oldcode != "" && oldcode != null){
-            orgcode = oldcode;
-            view.SqlStr = "select fld_1202_1,fld_1202_3,fld_1202_2,fld_1202_15,(select fld_1201_1 from gmis_mo_1201 where mocode=fld_1202_4),fld_1202_5,(select fld_1200_1 from gmis_mo_1200 where mocode=fld_1202_21),fld_1202_20,(select fld_1157_1+'|'+fld_1157_2 as name from gmis_mo_1157 where fld_1157_1=fld_1202_17),(select fld_1162_1+'|'+fld_1162_2 as name from gmis_mo_1162 where fld_1162_1=fld_1202_19),fld_1202_6,fld_1202_7,fld_1202_8,fld_1202_9,fld_1202_10,fld_1202_11,fld_1202_16,fld_1202_12,fld_1202_13,fld_1202_14,fld_1202_18 from gmis_mo_1202 where fld_1202_2='"+orgcode+"'";
+        string newcode = GetFieldData("select newcode from gmis_old_new_code where oldcode='"+orgcode+"'");
+        if (newcode != "" && newcode != null){
+            orgcode = newcode;
+            view.SqlStr = "select fld_1396_2,"+sql+" ,cast(fld_1396_26 as varchar)+'°'+cast(fld_1396_27 as varchar)+''''+cast(fld_1396_28 as varchar)+'\"',fld_1396_19,fld_1396_12,fld_1396_10,fld_1396_42,cast(fld_1396_34 as varchar)+'年'+cast(fld_1396_35 as varchar)+'月' from gmis_mo_1396 where fld_1396_1='"+orgcode+"'";
         }
     }
     else{
-        view.DataTable = dt;
+         view.DataTable = dt;
     }
+	iframe_1199.Attributes["src"] = "iframe_17_2.aspx?mid=" + mid + "&orgcode=" + StringUtility.StringToBase64(orgcode) +"&hycode="+StringUtility.StringToBase64(hycode) ;
 
-
-	if(GetQueryString("isNew","")=="1")
-	{
-		iframe_1199.Attributes["src"] = "iframe_17_1.aspx?mid=" + mid + "&orgcode=" + StringUtility.StringToBase64(orgcode) +"&hycode="+StringUtility.StringToBase64(hycode) ;
-	}
-	else
-	{
-		iframe_1199.Attributes["src"] = "iframe_17.aspx?mid=" + mid + "&orgcode=" + StringUtility.StringToBase64(orgcode) +"&hycode="+StringUtility.StringToBase64(hycode) ;
-	}
 }
 
 </script>
@@ -55,13 +48,13 @@ private void Page_Load(object sender, System.EventArgs e)
 <!--选项卡-->
 <!--操作工具条-->
 <div id="tools" runat="server">
-    <!--#include file="toolbarleft.aspx"--> 
+    <!--#include file="toolbarleft.aspx"-->
 			<!--右边固定按钮-->
 			<!--#include file="toolbar_17.aspx"-->
 
 			<!--右边固定按钮-->
 	   <!--#include file="toolbarright.aspx"-->
-</div> 
+</div>
 <!--操作工具条-->
 <!--动态生成html,开始-->
 <G:Content id="view" runat="server" Alert="<font size=8 color=red>本年度该企业无数据</font>">
@@ -80,7 +73,7 @@ private void Page_Load(object sender, System.EventArgs e)
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
 		<td width="100" align="right"  class="td_viewcontent_title">法定代表人:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
-	</tr>	
+	</tr>
 	<tr>
 		<td width="100" align="right"  class="td_viewcontent_title">行政区域:</td>
 		<td class="td_viewcontent_content">
@@ -102,41 +95,41 @@ private void Page_Load(object sender, System.EventArgs e)
 		<td class="td_viewcontent_content" style="width:35%">
 		*&nbsp;
 		</td>
-		
+
 		<td width="100" align="right"  class="td_viewcontent_title">企业规模:</td>
 		<td class="td_viewcontent_content" style="width:35%">
 		*&nbsp;
 		</td>
-	</tr>	
+	</tr>
 	<tr>
 		<td width="100" align="right"  class="td_viewcontent_title">中心经度:</td>
 		<td class="td_viewcontent_content" style="width:35%">
-		*&nbsp;&nbsp;°*&nbsp;&nbsp;'*&nbsp;&nbsp;"&nbsp;
+		*&nbsp;
 		</td>
-		
+
 		<td width="100" align="right"  class="td_viewcontent_title">中心纬度:</td>
 		<td class="td_viewcontent_content" style="width:35%">
-		*&nbsp;&nbsp;°*&nbsp;&nbsp;'*&nbsp;&nbsp;"&nbsp;
+		*&nbsp;
 		</td>
 	</tr>
 	<tr>
 		<td width="100" align="right"  class="td_viewcontent_title">联系人姓名:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
-		
+
 		<td width="100" align="right"  class="td_viewcontent_title">联系人电话:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="100" align="right"  class="td_viewcontent_title">传真号码:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
-		
+
 		<td width="100" align="right"  class="td_viewcontent_title">邮政编码:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
 	</tr>
 	<tr>
 		<td width="100" align="right"  class="td_viewcontent_title">开业时间:</td>
 		<td class="td_viewcontent_content" style="width:35%">*&nbsp;</td>
-		
+
 		<td width="100" align="right"  class="td_viewcontent_title">&nbsp;</td>
 		<td class="td_viewcontent_content" style="width:35%">&nbsp;</td>
 	</tr>

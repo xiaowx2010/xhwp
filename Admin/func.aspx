@@ -94,7 +94,7 @@ private string GetUserNameStr(string fstr)
     return sb.ToString().Trim(',');
 }
 //ȡһ�ֶ�ֵ;
-private string GetFieldData(string sqlstr)
+public string GetFieldData(string sqlstr)
 {
     db.SqlString = sqlstr;
     DataTable dt = db.GetDataTable();

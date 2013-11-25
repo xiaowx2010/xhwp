@@ -25,29 +25,13 @@ string horgcode="";
 		String h_index = h_dtindex.Rows[0][0].ToString();
 		DataTable h_dt = db.GetDataTable(db.ConnStr,"select gm.modulecode as modulecode,gf.fieldname as fieldname,gm.moduleurl as moduleurl from gmis_module gm	inner join gmis_field gf		on gm.modulecode=gf.modulecode where gm.moduleurl<>'' and gm.moduleindex like '"+h_index+"%'	 and gm.moduleurl not like '%sub%'	and caption='代码'");
 		//if(int.Parse(mid)<1270){
-		    HtmlTableCell cell11 = new HtmlTableCell();
-			Guangye.WebApplication.Controls.Button btn11 = new Guangye.WebApplication.Controls.Button();
-			btn11.ID = "btn_bs_1199";
-			btn11.Text = "09年数据";
-			btn11.Type = "tab";
-			btn11.Mode = (mid == "1199") ? "on" : "off";
-
-			btn11.Url = "javascript:Click_URL('view_1199.aspx?aid=dmlldw==&isNew=1&mid=1199&orgcode=" + StringUtility.StringToBase64(orgcode) + "&hycode="+StringUtility.StringToBase64(hycode)+"');";
-			cell11.Controls.Add(btn11);
-			tabs.Rows[0].Cells.Add(cell11);
-
-			HtmlTableCell cell01 = new HtmlTableCell();
-			cell01.InnerText = "|";
-			cell01.Width = "11";
-			cell01.Align = "center";
-			tabs.Rows[0].Cells.Add(cell01);
 
 			HtmlTableCell cell1 = new HtmlTableCell();
 			Guangye.WebApplication.Controls.Button btn1 = new Guangye.WebApplication.Controls.Button();
 			btn1.ID = "btn_bs_1199";
 			btn1.Text = "07年数据";
 			btn1.Type = "tab";
-			btn1.Mode = (mid == "1199") ? "on" : "off";
+			btn1.Mode = (mid == "11199") ? "on" : "off";
 
 			btn1.Url = "javascript:Click_URL('view_1199.aspx?aid=dmlldw==&mid=1199&orgcode=" + StringUtility.StringToBase64(orgcode) + "&hycode="+StringUtility.StringToBase64(hycode)+"');";
 			cell1.Controls.Add(btn1);
@@ -59,6 +43,23 @@ string horgcode="";
 			cell0.Align = "center";
 			tabs.Rows[0].Cells.Add(cell0);
 
+		    HtmlTableCell cell11 = new HtmlTableCell();
+			Guangye.WebApplication.Controls.Button btn11 = new Guangye.WebApplication.Controls.Button();
+			btn11.ID = "btn_bs_11199";
+			btn11.Text = "09年数据";
+			btn11.Type = "tab";
+			btn11.Mode = (mid == "11199") ? "on" : "off";
+
+			btn11.Url = "javascript:Click_URL('view_1199.aspx?aid=dmlldw==&isNew=1&mid=1199&orgcode=" + StringUtility.StringToBase64(orgcode) + "&hycode="+StringUtility.StringToBase64(hycode)+"');";
+			cell11.Controls.Add(btn11);
+			tabs.Rows[0].Cells.Add(cell11);
+
+			HtmlTableCell cell01 = new HtmlTableCell();
+			cell01.InnerText = "|";
+			cell01.Width = "11";
+			cell01.Align = "center";
+			tabs.Rows[0].Cells.Add(cell01);
+
 
 			HtmlTableCell cell = new HtmlTableCell();
 			Guangye.WebApplication.Controls.Button btn = new Guangye.WebApplication.Controls.Button();
@@ -67,7 +68,7 @@ string horgcode="";
 			btn.Type = "tab";
 			btn.Mode = (mid == "1199") ? "on" : "off";
 
-			btn.Url = "javascript:Click_URL('view_1199.aspx?aid=dmlldw==&isNew=1&mid=1199&orgcode=" + StringUtility.StringToBase64(orgcode) + "&hycode="+StringUtility.StringToBase64(hycode)+"');";
+			btn.Url = "javascript:Click_URL('view_1199_10.aspx?aid=dmlldw==&isNew=1&mid=1199&orgcode=" + StringUtility.StringToBase64(orgcode) + "&hycode="+StringUtility.StringToBase64(hycode)+"');";
 			cell.Controls.Add(btn);
 			tabs.Rows[0].Cells.Add(cell);
 		//}
